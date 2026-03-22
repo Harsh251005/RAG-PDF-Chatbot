@@ -1,0 +1,19 @@
+# Environment variables
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environments
+venv/
+.venv/
+
+# IDE
+.idea/
+
+# Data / DB
+chroma_db/
+
+# PDFs (optional — only if you REALLY want to ignore them)
+*.pdf
