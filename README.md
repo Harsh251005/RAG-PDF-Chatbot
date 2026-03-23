@@ -1,17 +1,24 @@
 # RAG PDF Chatbot
 
-A conversational AI app that lets you upload a PDF and ask questions about its content. Built using LangChain, Groq, ChromaDB, and Streamlit.
+A conversational AI app that lets you upload multiple PDFs and ask questions about their content. Supports follow-up questions with full chat history awareness and source citations.
+
+## Features
+
+- **Multi-document support** — upload and query multiple PDFs simultaneously
+- **Conversational memory** — follow-up questions work correctly using history-aware retrieval
+- **Source citations** — every answer shows the source document and page number it came from
 
 ## How It Works
 
-1. Upload a PDF via the UI
-2. The document is parsed, split into chunks, and embedded into a local Chroma vector store
-3. When you ask a question, relevant chunks are retrieved and passed to the LLM as context
-4. The LLM answers based strictly on the document content
+1. Upload one or more PDFs via the UI
+2. Documents are parsed, split into chunks, embedded, and stored in a local Chroma vector store
+3. When you ask a question, it gets rephrased based on chat history for accurate retrieval
+4. Relevant chunks are retrieved and passed to the LLM as context
+5. The LLM answers based strictly on the document content, with sources shown below
 
 ## Tech Stack
 
-- **LangChain** — RAG pipeline, document loaders, text splitters, retrieval chain
+- **LangChain** — RAG pipeline, history-aware retriever, document loaders, text splitters
 - **Groq** — LLM inference (Qwen3-32B)
 - **ChromaDB** — Local vector store for storing and searching embeddings
 - **HuggingFace Embeddings** — `sentence-transformers/all-mpnet-base-v2`
@@ -49,6 +56,7 @@ RAG PDF Chatbot/
 ## What I Learned
 
 - How RAG pipelines work end-to-end
-- Chunking strategies and why chunk size/overlap matters
-- How vector similarity search retrieves relevant context
-- Managing Streamlit session state to avoid re-processing on every interaction
+- Why chunking strategy (size and overlap) directly impacts answer quality
+- How `create_history_aware_retriever` rephrases follow-up questions into standalone queries before retrieval — and why this matters
+- How LangChain's `HumanMessage` and `AIMessage` objects manage conversation state
+- How to extract source metadata from retrieved documents for citations
